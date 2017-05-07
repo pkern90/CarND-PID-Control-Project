@@ -13,4 +13,9 @@ double Clip(double value, double lower, double upper){
     }
 }
 
+double Sigmoid(double value, double lower, double upper){
+    double range = upper - lower;
+    return range / (1 + exp(-value)) + lower;
+}
+
 #endif //PID_UTILS_HPP

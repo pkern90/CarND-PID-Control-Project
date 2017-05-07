@@ -9,13 +9,6 @@
 // for convenience
 using json = nlohmann::json;
 
-// For converting back and forth between radians and degrees.
-constexpr double pi() { return M_PI; }
-
-double deg2rad(double x) { return x * pi() / 180; }
-
-double rad2deg(double x) { return x * 180 / pi(); }
-
 // Checks if the SocketIO event has JSON data.
 // If there is data the JSON object in string format will be returned,
 // else the empty string "" will be returned.
@@ -32,7 +25,7 @@ std::string hasData(std::string s) {
 }
 
 std::string reset_msg = "42[\"reset\", {}]";
-double target_speed = 50;
+double target_speed = 60;
 
 int main() {
     uWS::Hub h;
@@ -40,8 +33,8 @@ int main() {
     PID steer_pid;
     PID throttle_pid;
     // TODO: Initialize the steer_pid variable.
-    steer_pid.Init(.10, .0007, 2.);
-    throttle_pid.Init(1., .0005, .01);
+    steer_pid.Init(.15, .0002, 2.);
+    throttle_pid.Init(3., .0002, 2.);
 
     h.onMessage([&steer_pid, &throttle_pid](uWS::WebSocket<uWS::SERVER> ws, char *data, size_t length, uWS::OpCode opCode) {
         // "42" at the start of the message means there's a websocket message event.
@@ -63,12 +56,12 @@ int main() {
 
                     steer_pid.UpdateError(cte);
                     steer_value = steer_pid.TotalError();
-                    steer_value = Clip(steer_value, -1., 1.);
+                    steer_value = Sigmoid(steer_value, -1., 1.);
 
                     throttle_pid.UpdateError(speed_cte);
                     throttle_value = throttle_pid.TotalError();
                     std::cout << "Speed CTE: " << speed_cte << " Throttle Value: " << throttle_value << std::endl;
-                    throttle_value = Clip(throttle_value, -1., 1.);
+                    throttle_value = Sigmoid(throttle_value, -1., 1.);
 
                     // DEBUG
                     std::cout << "Steer CTE: " << cte << " Steering Value: " << steer_value << std::endl;
@@ -80,7 +73,6 @@ int main() {
                     auto msg = "42[\"steer\"," + msgJson.dump() + "]";
                     std::cout << msg << std::endl;
                     ws.send(msg.data(), msg.length(), uWS::OpCode::TEXT);
-//                    ws.send(reset_msg.data(), reset_msg.length(), uWS::OpCode::TEXT);
                 }
             } else {
                 // Manual driving
