@@ -59,4 +59,5 @@ Effects of increasing a parameter independently
 | Kp       | Decrease  | Increase  | NT            | Decrease  |
 | Ki       | Decrease  | Increase  | Increase      | Eliminate |
 | Kd       | NT        | Decrease  | Decrease      | NT        |
+
 Jinghua Zhong (Spring 2006). "PID Controller Tuning: A Short Tutorial" (PDF). Retrieved 2011-04-04.
