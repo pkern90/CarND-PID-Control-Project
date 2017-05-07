@@ -1,10 +1,7 @@
 #include <uWS/uWS.h>
-#include <iostream>
 #include "json.hpp"
 #include "PID.h"
 #include "utils.hpp"
-#include <math.h>
-#include <cstdint>
 
 // for convenience
 using json = nlohmann::json;
@@ -24,7 +21,6 @@ std::string hasData(std::string s) {
     return "";
 }
 
-std::string reset_msg = "42[\"reset\", {}]";
 double target_speed = 60;
 
 int main() {
@@ -32,7 +28,6 @@ int main() {
 
     PID steer_pid;
     PID throttle_pid;
-    // TODO: Initialize the steer_pid variable.
     steer_pid.Init(.15, .0002, 2.);
     throttle_pid.Init(3., .0002, 2.);
 
