@@ -45,6 +45,13 @@ were set to zero. Then Kp was increased until the car oscillated. In the next st
 able to quickly reach it's reference. For Ki, a very small value was chosen since the simulator has basically no steering
 bias.
 
+The final values for the coefficients for a speed of 60 mph are:
+
+Kp = 0.15</br>
+Ki = 0.0002</br>
+Kd = 2.0
+
+
 Effects of increasing a parameter independently
 
 | Response | Rise Time | Overshoot | Settling Time | S-S Error |
