@@ -21,14 +21,14 @@ std::string hasData(std::string s) {
     return "";
 }
 
-double target_speed = 60;
+double target_speed = 50;
 
 int main() {
     uWS::Hub h;
 
     PID steer_pid;
     PID throttle_pid;
-    steer_pid.Init(.15, .0002, 2.);
+    steer_pid.Init(.2, .0002, 2.);
     throttle_pid.Init(3., .0002, 2.);
 
     h.onMessage([&steer_pid, &throttle_pid](uWS::WebSocket<uWS::SERVER> ws, char *data, size_t length, uWS::OpCode opCode) {
